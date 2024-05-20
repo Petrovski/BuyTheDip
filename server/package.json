@@ -1,18 +1,24 @@
 {
-  "name": "btd",
-  "version": "1.0.0",
-  "description": "A stock market dashboard API",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Alex Petroski",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.19.2"
-  },
-  "devDependencies": {
-    "@types/express": "^4.17.21",
-    "typescript": "^5.4.5"
-  }
+	"name": "btd",
+	"version": "1.0.0",
+	"description": "A stock market dashboard API",
+	"main": "index.js",
+	"scripts": {
+		"dev": "npx tsc && concurrently \"tsc -w\" \"nodemon dist/index.js\"",
+		"start": "node dist/index.js",
+		"build": "npx tsc",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Alex Petroski",
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.19.2"
+	},
+	"devDependencies": {
+		"@types/express": "^4.17.21",
+		"@types/node": "^20.12.12",
+		"nodemon": "^3.1.0",
+		"typescript": "^5.4.5"
+	}
 }
+
