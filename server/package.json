@@ -7,7 +7,7 @@
 		"clean": "rm -rf dist",
 		"build": "npm run clean && tsc",
 		"start": "npm run build && concurrently \"tsc -w\" \"nodemon dist/server.js\"",
-		"dev": "node dist/index.js",
+		"dev": "node dist/server.js",
 		"seed-db": "ts-node src/database/seed.ts",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
@@ -32,3 +32,4 @@
 		"typescript": "^5.4.5"
 	}
 }
+

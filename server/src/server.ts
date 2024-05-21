@@ -1,20 +1,20 @@
+import express from 'express';
 import http from 'http';
-import app from './app';
-import { wss } from './websocket/websocket';
-import WebSocket from 'ws';
-import dotenv from 'dotenv';
-dotenv.config();
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import setupWebSocket from './websocket/websocket';
+import stockRoutes from './routes/stockRoutes';
 
+const app = express();
 const server = http.createServer(app);
 
-server.on('upgrade', (request: http.IncomingMessage, socket: any, head: Buffer) => {
-	wss.handleUpgrade(request, socket, head, (ws: WebSocket, request: http.IncomingMessage) => {
-		wss.emit('connection', ws, request);
-	});
-});
+app.use(cors());
+app.use(bodyParser.json());
+app.use('/api', stockRoutes);
 
-const PORT = process.env.PORT || 8000;
+setupWebSocket(server);
 
-server.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`);
+const port = process.env.PORT || 8000;
+server.listen(port, () => {
+	console.log(`Server running on port ${port}`);
 });
