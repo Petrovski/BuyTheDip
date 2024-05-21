@@ -1,78 +1,72 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 interface AddStockProps {
-  show: boolean;
-  onClose: () => void;
-  onAddStock: (stock: { symbol: string; price: number; change: number }) => void;
+	show: boolean;
+	onClose: () => void;
+	onAddStock: (success: boolean, message: string) => void;
 }
 
 export default function AddStock({ show, onClose, onAddStock }: AddStockProps) {
-  const [symbol, setSymbol] = useState('');
-  const [price, setPrice] = useState(0);
-  const [change, setChange] = useState(0);
-  const [error, setError] = useState<string | null>(null);
+	const [symbol, setSymbol] = useState('');
+	const [price, setPrice] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const response = await fetch('http://localhost:8000/api/addStock', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ symbol, price, change }),
-      });
-      if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-      }
-      onAddStock({ symbol, price, change });
-      onClose();
-    } catch (error: any) {
-      setError(error.message);
-    }
-  };
+	const handleAddStock = async () => {
+		try {
+			const response = await fetch('http://localhost:8000/api/addStock', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ symbol, price: parseFloat(price), change: 0 }),
+			});
 
-  return (
-    <Modal show={show} onHide={onClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Add Stock</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="symbol">
-            <Form.Label>Symbol</Form.Label>
-            <Form.Control
-              type="text"
-              value={symbol}
-              onChange={(e) => setSymbol(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="price">
-            <Form.Label>Price</Form.Label>
-            <Form.Control
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(parseFloat(e.target.value))}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="change">
-            <Form.Label>Change</Form.Label>
-            <Form.Control
-              type="number"
-              value={change}
-              onChange={(e) => setChange(parseFloat(e.target.value))}
-              required
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Add
-          </Button>
-        </Form>
-        {error && <div className="text-danger">{error}</div>}
-      </Modal.Body>
-    </Modal>
-  );
+			if (!response.ok) {
+				throw new Error(`Error: ${response.statusText}`);
+			}
+
+			onAddStock(true, `Stock symbol ${symbol} added successfully!`);
+			onClose();
+		} catch (error) {
+			onAddStock(false, error instanceof Error ? error.message : 'An unknown error occurred');
+		}
+	};
+
+	return (
+		<Modal show={show} onHide={onClose}>
+			<Modal.Header closeButton>
+				<Modal.Title>Add Stock</Modal.Title>
+			</Modal.Header>
+			<Modal.Body>
+				<Form>
+					<Form.Group controlId="formStockSymbol">
+						<Form.Label>Stock Symbol</Form.Label>
+						<Form.Control
+							type="text"
+							placeholder="Enter stock symbol"
+							value={symbol}
+							onChange={(e) => setSymbol(e.target.value)}
+						/>
+					</Form.Group>
+					<Form.Group controlId="formStockPrice">
+						<Form.Label>Stock Price</Form.Label>
+						<Form.Control
+							type="number"
+							placeholder="Enter stock price"
+							value={price}
+							onChange={(e) => setPrice(e.target.value)}
+						/>
+					</Form.Group>
+				</Form>
+			</Modal.Body>
+			<Modal.Footer>
+				<Button variant="secondary" onClick={onClose}>
+					Close
+				</Button>
+				<Button variant="primary" onClick={handleAddStock}>
+					Add Stock
+				</Button>
+			</Modal.Footer>
+		</Modal>
+	);
 }

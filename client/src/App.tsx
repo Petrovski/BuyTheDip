@@ -1,16 +1,26 @@
 import { Button, Container } from 'react-bootstrap';
-import Header from './components/Header';
+import Header from './components/Header/Header';
 import StockList from './components/StockList/StockList';
 import AddStock from './components/AddStock/AddStock';
+import Alert from './components/Alert/Alert';
 import { useState } from 'react';
 
 function App() {
 	const [showAddStockModal, setShowAddStockModal] = useState(false);
+	const [alertMessage, setAlertMessage] = useState<string | null>(null);
+	const [alertVariant, setAlertVariant] = useState<'success' | 'danger'>('success');
 
-	const handleAddStock = (stock: { symbol: string; price: number }) => {
-		// Add logic here to send the new stock data to your backend API
-		console.log('New stock added:', stock);
+	const handleAddStock = (success: boolean, message: string) => {
 		setShowAddStockModal(false);
+		setAlertMessage(message);
+		setAlertVariant(success ? 'success' : 'danger');
+		showAlert();
+	};
+
+	const showAlert = () => {
+		setTimeout(() => {
+			setAlertMessage(null);
+		}, 8000);
 	};
 
 	return (
@@ -18,12 +28,13 @@ function App() {
 			<Header />
 			<hr />
 			<Container>
-        <div>
-				<h2>Watchlist</h2>
-				<Button variant='primary' onClick={() => setShowAddStockModal(true)}>
-					+ Add Stock
-				</Button>
-        </div>
+			{alertMessage && <Alert message={alertMessage} variant={alertVariant} />}
+				<div>
+					<h2 style={{marginBottom: '30px'}}>Your Watchlist</h2>
+					<Button style={{marginBottom: '30px'}} variant='primary' onClick={() => setShowAddStockModal(true)}>
+						+ Add Stock
+					</Button>
+				</div>
 			</Container>
 			<StockList />
 			<AddStock show={showAddStockModal} onClose={() => setShowAddStockModal(false)} onAddStock={handleAddStock} />
@@ -32,4 +43,3 @@ function App() {
 }
 
 export default App;
-

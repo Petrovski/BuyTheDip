@@ -19,7 +19,6 @@ export default function StockList() {
   useEffect(() => {
     const fetchStocksAndSetupWebSocket = async () => {
       try {
-        // Fetch initial stock data from REST API
         const response = await fetch('http://localhost:8000/api/getStocks');
         if (!response.ok) {
           throw new Error(`Error: ${response.statusText}`);
@@ -28,7 +27,6 @@ export default function StockList() {
         setStocks(data);
         setLoading(false);
 
-        // Set up WebSocket connection
         const socket = new WebSocket('ws://localhost:8000');
 
         socket.onopen = () => {

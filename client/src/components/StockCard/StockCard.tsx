@@ -9,7 +9,7 @@ interface StockCardProps {
 
 export default function StockCard({ symbol, price, change }: StockCardProps) {
 	return (
-		<Card className='stock-card' style={{ marginBottom: '20px' }}>
+		<Card className='stock-card' style={{ marginBottom: '20px', border: '5px solid #ccc', borderColor: change >= 0 ? '#2d990f' : '#ba2f2f' }} >
 			<Card.Body>
 				<Card.Title>{symbol}</Card.Title>
 				<Card.Text>Price: {price}</Card.Text>

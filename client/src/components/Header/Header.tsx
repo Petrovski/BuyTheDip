@@ -1,6 +1,6 @@
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
-import logo from '../assets/logo.webp'
+import logo from '../../assets/btd.png'
 
 export default function Header() {
 	return (
@@ -8,7 +8,7 @@ export default function Header() {
 			<Navbar className='bg-body'>
 				<Container>
 					<Navbar.Brand href='#home'>
-						<img alt='BTD logo' src={logo} width='100' height='50' className='d-inline-block align-top' />
+						<img alt='BTD logo' src={logo} width='80' height='80' className='d-inline-block align-top' />
 					</Navbar.Brand>
 				</Container>
 			</Navbar>
