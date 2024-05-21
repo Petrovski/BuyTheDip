@@ -4,6 +4,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import setupWebSocket from './websocket/websocket';
 import stockRoutes from './routes/stockRoutes';
+import userRoutes from './routes/userRoutes';
 
 const app = express();
 const server = http.createServer(app);
@@ -11,6 +12,7 @@ const server = http.createServer(app);
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/api', stockRoutes);
+app.use('/api', userRoutes);
 
 setupWebSocket(server);
 

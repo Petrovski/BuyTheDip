@@ -14,12 +14,12 @@ export const pool = new Pool({
 export async function createDatabaseIfNotExists() {
 	const client = await pool.connect();
 	try {
-		const result = await client.query("SELECT 1 FROM pg_database WHERE datname = 'stocks'");
+		const result = await client.query("SELECT 1 FROM pg_database WHERE datname = 'btd'");
 		if (result.rows.length === 0) {
-			await client.query('CREATE DATABASE stocks');
-			console.log('Database "stocks" created');
+			await client.query('CREATE DATABASE btd');
+			console.log('Database "brd" created');
 		} else {
-			console.log('Database "stocks" already exists');
+			console.log('Database "btd" already exists');
 		}
 	} catch (err: any) {
 		console.error('Error creating database:', err.message);
@@ -37,7 +37,14 @@ export async function createTablesIfNotExists() {
         symbol VARCHAR(10) NOT NULL,
         price FLOAT NOT NULL,
         change FLOAT NOT NULL
-      )
+      );
+			CREATE TABLE IF NOT EXISTS users (
+				id SERIAL PRIMARY KEY,
+				name VARCHAR(255) NOT NULL,
+				email VARCHAR(255) UNIQUE NOT NULL,
+				password VARCHAR(255) NOT NULL,
+				created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+			);
     `);
 		console.log('Tables created or already exist');
 	} catch (err: any) {
