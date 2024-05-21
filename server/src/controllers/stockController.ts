@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { pool } from '../db';
+import { pool } from '../database/db';
 import { Stock } from '../interfaces/stock';
 import { getErrorMessage } from '../utils/errorHandler';
 

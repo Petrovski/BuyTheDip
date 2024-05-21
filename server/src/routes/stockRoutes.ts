@@ -4,6 +4,6 @@ import { getStocks, addStock } from '../controllers/stockController';
 const router = Router();
 
 router.get('/getStocks', getStocks);
-router.post('/stocks', addStock);
+router.post('/addStock', addStock);
 
 export default router;
