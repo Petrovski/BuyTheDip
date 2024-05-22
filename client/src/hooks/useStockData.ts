@@ -20,6 +20,7 @@ const useStockData = () => {
 					throw new Error(`Error: ${response.statusText}`);
 				}
 				const data: Stock[] = await response.json();
+				data.sort((a, b) => a.symbol.localeCompare(b.symbol));
 				setStocks(data);
 				setLoading(false);
 
@@ -32,6 +33,7 @@ const useStockData = () => {
 
 				socket.onmessage = (event) => {
 					const stockData: Stock[] = JSON.parse(event.data);
+					stockData.sort((a, b) => a.symbol.localeCompare(b.symbol));
 					setStocks(stockData);
 				};
 
