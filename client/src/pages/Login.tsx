@@ -67,9 +67,9 @@ export default function Login({ setIsAuthenticated }: LoginProps) {
         const data = await response.json();
         console.log(data);
         setWithExpiry('userToken', data.token, 3600000);
+        setWithExpiry('userData', data.user, 3600000)
         setAlert({ type: 'success', message: 'Login successful! Taking you to your watchlist...' });
         setTimeout(() => {
-          localStorage.setItem('userData', JSON.stringify(data.user));
           setIsAuthenticated(true);
           navigate('/');
         }, 3000)
@@ -81,7 +81,7 @@ export default function Login({ setIsAuthenticated }: LoginProps) {
   };
 
   return (
-    <Container className='d-flex justify-content-center align-items-center' style={{ height: '60vh' }}>
+    <Container className='d-flex justify-content-center align-items-center' style={{ height: '90vh' }}>
       <Row>
         <Col>
           <h1 className='text-center mb-4'>Login</h1>

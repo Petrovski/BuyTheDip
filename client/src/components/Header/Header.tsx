@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 export default function Header() {
-	const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+	const userToken = JSON.parse(localStorage.getItem('userToken') || '{}');
 
 	const navigate = useNavigate();
 
@@ -25,16 +25,19 @@ export default function Header() {
 
 	return (
 		<>
-			{userData.email ? (
-				<Navbar className='bg-body'>
-					<Container className='d-flex align-items-center'>
-						<Navbar.Brand style={{ cursor: 'pointer' }} onClick={handleNavigateToHome}>
-							<img alt='BTD logo' src={logo} width='80' height='80' className='d-inline-block align-top' />
-						</Navbar.Brand>
-						<PersonCircle style={{ cursor: 'pointer' }} size={40} onClick={handleNavigateToUser} />
-						<Button onClick={handleLogout}>Logout</Button>
-					</Container>
-				</Navbar>
+			{userToken.value ? (
+				<>
+					<Navbar className='bg-body'>
+						<Container className='d-flex align-items-center'>
+							<Navbar.Brand style={{ cursor: 'pointer' }} onClick={handleNavigateToHome}>
+								<img alt='BTD logo' src={logo} width='80' height='80' className='d-inline-block align-top' />
+							</Navbar.Brand>
+							<PersonCircle style={{ cursor: 'pointer' }} size={40} onClick={handleNavigateToUser} />
+							<Button onClick={handleLogout}>Logout</Button>
+						</Container>
+					</Navbar>
+					<hr />
+				</>
 			) : (
 				''
 			)}

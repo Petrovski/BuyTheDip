@@ -2,6 +2,7 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useState, useEffect, ChangeEvent, FormEvent, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Alert from '../components/Alert/Alert';
+import { setWithExpiry } from '../utils/localStorageUtils';
 
 interface FormData {
 	name: string;
@@ -81,8 +82,8 @@ export default function Register() {
 
 				const data = await response.json();
 				console.log('User registered:', data);
-				setAlert({ type: 'success', message: 'Registration successful! Taking you to your watchlist...' });
-				localStorage.setItem('userData', JSON.stringify(data));
+				setAlert({ type: 'success', message: 'Registration successful! Sending you to login...' });
+				setWithExpiry('userData', data, 3600000);
 				setTimeout(() => {
 					navigate('/');
 				}, 3000);
@@ -102,7 +103,7 @@ export default function Register() {
 	};
 
 	return (
-		<Container className='d-flex justify-content-center align-items-center' style={{ height: '60vh' }}>
+		<Container className='d-flex justify-content-center align-items-center' style={{ height: '90vh' }}>
 			<Row>
 				<Col>
 					<h1 className='text-center mb-4'>Register</h1>

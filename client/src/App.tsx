@@ -27,10 +27,12 @@ function App() {
   return (
     <Router>
       <Header />
-      <hr />
       <Routes>
         <Route path='/' element={isAuthenticated ? <Home /> : <Navigate to='/login' />} />
-        <Route path='/register' element={<Register />} />
+        <Route
+          path='/register'
+          element={!isAuthenticated ? <Register /> : <Navigate to='/' />}
+        />
         <Route
           path='/login'
           element={!isAuthenticated ? <Login setIsAuthenticated={setIsAuthenticated} /> : <Navigate to='/' />}
@@ -38,7 +40,6 @@ function App() {
 				<Route path='/user' element={<User />} />
 				<Route path='*' element={<NotFound />} />
       </Routes>
-      <hr />
       <Footer />
     </Router>
   );
