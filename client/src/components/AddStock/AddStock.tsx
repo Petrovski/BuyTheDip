@@ -63,7 +63,7 @@ export default function AddStock({ show, onClose, onAddStock }: AddStockProps) {
 				<Button variant="secondary" onClick={onClose}>
 					Close
 				</Button>
-				<Button variant="primary" onClick={handleAddStock}>
+				<Button variant="success" onClick={handleAddStock}>
 					Add Stock
 				</Button>
 			</Modal.Footer>

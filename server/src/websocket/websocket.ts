@@ -1,12 +1,6 @@
 import WebSocket from 'ws';
 import pool from '../database/db';
-
-interface Stock {
-	id: number;
-	symbol: string;
-	price: number;
-	change: number;
-}
+import { Stock } from '../interfaces/stock';
 
 async function fetchStocks(): Promise<Stock[]> {
 	const result = await pool.query('SELECT * FROM stocks');
