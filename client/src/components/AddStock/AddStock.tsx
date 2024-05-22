@@ -10,8 +10,14 @@ interface AddStockProps {
 export default function AddStock({ show, onClose, onAddStock }: AddStockProps) {
 	const [symbol, setSymbol] = useState('');
 	const [price, setPrice] = useState('');
+	const [error, setError] = useState<string | null>(null);
 
 	const handleAddStock = async () => {
+		if (symbol.length !== 5) {
+			setError('Stock symbol must be exactly 5 characters long');
+			return;
+		}
+
 		try {
 			const response = await fetch('http://localhost:8000/api/addStock', {
 				method: 'POST',
@@ -39,20 +45,25 @@ export default function AddStock({ show, onClose, onAddStock }: AddStockProps) {
 			</Modal.Header>
 			<Modal.Body>
 				<Form>
-					<Form.Group controlId="formStockSymbol">
+					<Form.Group controlId='formStockSymbol'>
 						<Form.Label>Stock Symbol</Form.Label>
 						<Form.Control
-							type="text"
-							placeholder="Enter stock symbol"
+							type='text'
+							placeholder='Enter stock symbol'
 							value={symbol}
-							onChange={(e) => setSymbol(e.target.value)}
+							onChange={(e) => {
+								setSymbol(e.target.value);
+								if (error) setError(null);
+							}}
+							maxLength={5}
 						/>
 					</Form.Group>
-					<Form.Group controlId="formStockPrice">
+					{error && <div className='text-danger'>{error}</div>}
+					<Form.Group controlId='formStockPrice'>
 						<Form.Label>Stock Price</Form.Label>
 						<Form.Control
-							type="number"
-							placeholder="Enter stock price"
+							type='number'
+							placeholder='Enter stock price'
 							value={price}
 							onChange={(e) => setPrice(e.target.value)}
 						/>
@@ -60,10 +71,10 @@ export default function AddStock({ show, onClose, onAddStock }: AddStockProps) {
 				</Form>
 			</Modal.Body>
 			<Modal.Footer>
-				<Button variant="secondary" onClick={onClose}>
+				<Button variant='secondary' onClick={onClose}>
 					Close
 				</Button>
-				<Button variant="success" onClick={handleAddStock}>
+				<Button variant='success' onClick={handleAddStock}>
 					Add Stock
 				</Button>
 			</Modal.Footer>
