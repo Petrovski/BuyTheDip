@@ -7,7 +7,7 @@ BuyTheDip is a web application built using React for the front end, Node.js for 
 To run this application locally, follow these steps:
 
 1. **Prerequisites**
-   - Node.js (version >= 14)
+   - Node.js (version >= 16)
    - PostgreSQL
    - Git
 
