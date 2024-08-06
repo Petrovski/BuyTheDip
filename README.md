@@ -1,7 +1,7 @@
 # BuyTheDip Application
 
 ## Overview
-BuyTheDip is a web application built using React for the front end, Node.js for the back end, and PostgreSQL for the database. It allows users to track stock prices and view the biggest price dips in the market today!
+BuyTheDip is a web application built using React for the front end, Node.js for the back end, and PostgreSQL for the database. It allows users to track stock prices and view the biggest price dips in the market.
 
 ## Getting Started
 To run this application locally, follow these steps:
